@@ -5,7 +5,7 @@ class LaserBeam {
         console.log("pkp:  ~ file: UTIL1.js:5 ~ LaserBeam ~ constructor ~ iconfig:", iconfig)
 
         var config = {
-            length: 50, //the length of light bar
+            length: 30, //the length of light bar
             reflectMax: 1
         };
         config = $.extend(config, iconfig);

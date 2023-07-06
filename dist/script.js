@@ -42,7 +42,7 @@ scene.add(sunLight);
 //All object
 var Geometry, Material;
 var objectArray = [];
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < 2; i++) {
     Geometry = new THREE.BoxGeometry(1, 2, 4);
     Material = new THREE.MeshPhongMaterial({
         color: 0x00ff00
@@ -75,7 +75,7 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    LaserBeam1.object3d.position.set(4.5, 0, 7);
+    LaserBeam1.object3d.position.set(-2, 0, 1);// start postion of laser beam
     LaserBeam1.intersect(
         new THREE.Vector3(-4.5, 0, -4.5 + Math.cos(Date.now() * 0.05 * Math.PI / 180) * 2),
         objectArray
@@ -88,4 +88,13 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
-
+/**
+ * Steps:
+ * 
+ * Load GLB Model
+ * Create 2 laser beam
+ * create 2 reflectors individually
+ * position laser beam and reflector
+ * check and make angle correct of laser beam and object
+ * make the length of the laser beam to correctly focus on center of retina
+ */

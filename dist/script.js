@@ -1,6 +1,5 @@
 var scene, camera, renderer, container;
 var Ambient, sunLight;
-var LaserBeam1;
 var objectArray;
 container = document.getElementById('canvas-div');
 
@@ -36,7 +35,9 @@ function createScene(callee) {
     //All object
     var Geometry, Material;
     objectArray = [];
-    for (var i = 0; i < 2; i++) {
+    // number of reflectors
+    var numReflect = 1
+    for (var i = 0; i < numReflect; i++) {
         Geometry = new THREE.BoxGeometry(1, 2, 4);
         Material = new THREE.MeshPhongMaterial({
             color: 0x00ff00
@@ -48,19 +49,32 @@ function createScene(callee) {
             0,
             i * -5
         );
+
+        Mash.rotation.set(
+            0.5,
+            -0.1,
+            0.5
+        );
         objectArray.push(Mash);
         scene.add(Mash);
     }
-    LaserBeam1 = new LaserBeam({
-        reflectMax: 5
-    });
-    LaserBeam1.object3d.position.set(-1, 0, 1);// start postion of laser beam
+
 
 
 }
 
 createScene("init")
 
+function createLaserBeam(callee, y, len) {
+    console.log("pkp:  ~ file: script.js:65 ~ createLaserBeam ~ callee:", callee)
+
+    var myLaser = new LaserBeam({
+        reflectMax: 1,
+        length: len
+    });
+    myLaser.object3d.position.set(-1, y, 2);// start postion of laser beam
+    return myLaser
+}
 
 function add2Scene(obj) {
     scene.add(obj.object3d);
@@ -70,19 +84,43 @@ function add2Scene(obj) {
         add2Scene(obj.reflectObject);
     }
 }
-add2Scene(LaserBeam1);
-
-
 function animate() {
     requestAnimationFrame(animate);
     camera.lookAt(scene.position);
     renderer.render(scene, camera);
 }
+
+var globalObject = {
+    beamPosX: 1, //100-1
+    len1: 4,
+    len2: 10,
+    rotation1: 1.5,
+    rotation1: 1.5
+}
+
+function createBeams(callee) {
+
+    var laser1 = createLaserBeam("beam 1", 0, globalObject.len1)
+    var laser2 = createLaserBeam("beam 2", 1, globalObject.len2)
+
+    add2Scene(laser1);
+    add2Scene(laser2);
+
+    laser1.intersect(
+        new THREE.Vector3(-4.5, 0, -4.5),
+        objectArray
+    );
+    laser2.intersect(
+        new THREE.Vector3(-4.5, 0, -4.5),
+        objectArray
+    );
+
+}
+
 animate();
-LaserBeam1.intersect(
-    new THREE.Vector3(-4.5, 0, -4.5),
-    objectArray
-);
+createBeams("create all")
+
+
 /**
  * Steps:
  * 
@@ -92,4 +130,12 @@ LaserBeam1.intersect(
  * position laser beam and reflector
  * check and make angle correct of laser beam and object
  * make the length of the laser beam to correctly focus on center of retina
+ */
+
+
+/**
+ * 
+ * Laser:       initial pos,after wards length(after reflect)
+ * Reflector:   pos(Debug),rot(Prod)
+ * 
  */

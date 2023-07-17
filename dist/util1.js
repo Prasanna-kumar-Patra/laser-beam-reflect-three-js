@@ -5,7 +5,7 @@ class LaserBeam {
         console.log("pkp:  ~ file: UTIL1.js:5 ~ LaserBeam ~ constructor ~ iconfig:", iconfig)
 
         var config = {
-            length: 30, //the length of light bar
+            length: iconfig.length, //the length of light bar
             reflectMax: 1
         };
         config = $.extend(config, iconfig);
@@ -58,6 +58,8 @@ class LaserBeam {
             //have collision
             if (intersectArray.length > 0) {
                 this.object3d.scale.z = intersectArray[0].distance;
+                console.log("pkp:  ~ file: util1.js:61 ~ LaserBeam ~ constructor ~ intersectArray:", intersectArray)
+                console.log("pkp:  ~ file: util1.js:61 ~ LaserBeam ~ constructor ~ this.object3d.scale.z:", this.object3d.scale.z)
                 this.object3d.lookAt(intersectArray[0].point.clone());
                 this.pointLight.visible = true;
 

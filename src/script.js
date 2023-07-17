@@ -1,6 +1,5 @@
 var scene, camera, renderer, container;
 var Ambient, sunLight;
-var LaserBeam1;
 
 container = document.getElementById('canvas-div');
 
@@ -16,7 +15,7 @@ var mouse = {
     x: 0,
     y: 0
 }
-document.addEventListener('mousemove', function(event) {
+document.addEventListener('mousemove', function (event) {
     mouse.x = (event.clientX / window.innerWidth) - 0.5
     mouse.y = (event.clientY / window.innerHeight) - 0.5
 }, false);
@@ -132,7 +131,7 @@ function LaserBeam(iconfig) {
         }));
 
 
-    this.intersect = function(direction, objectArray = []) {
+    this.intersect = function (direction, objectArray = []) {
 
         raycaster.set(
             this.object3d.position.clone(),
@@ -191,7 +190,7 @@ function LaserBeam(iconfig) {
         }
     }
 
-    this.hiddenReflectObject = function() {
+    this.hiddenReflectObject = function () {
         if (this.reflectObject != null) {
             this.reflectObject.object3d.visible = false;
             this.reflectObject.pointLight.visible = false;
